@@ -15,6 +15,7 @@ codeunit 50301 MyEventSubscriberCodeunit
             SalesHeader.MODIFY;
         END;
         DIALOG.MESSAGE(Text001);
+        Message('test');
     END;
 
 
