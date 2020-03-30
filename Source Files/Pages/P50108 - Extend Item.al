@@ -2,6 +2,10 @@ pageextension 50108 ExtendItemList extends "Item List"
 {
     layout
     {
+        modify(InventoryField)
+        {
+            Caption = 'Qty On Hand';
+        }
         addbefore("Substitutes Exist")
         {
             field(Qty_Available; Qty_Available)
@@ -10,6 +14,18 @@ pageextension 50108 ExtendItemList extends "Item List"
                 ApplicationArea = all;
             }
         }
+        addbefore(Qty_Available)
+        {
+            field("Qty. on Purch. Order"; "Qty. on Purch. Order")
+            {
+                ApplicationArea = All;
+            }
+            field("Qty. on Sales Order"; "Qty. on Sales Order")
+            {
+                ApplicationArea = All;
+            }
+        }
+
     }
 
     actions

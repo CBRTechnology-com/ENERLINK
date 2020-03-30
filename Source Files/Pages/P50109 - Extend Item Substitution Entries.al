@@ -41,18 +41,35 @@ pageextension 50109 ExtendItemSubstitutionEntries extends "Item Substitution Ent
     end;
 
     procedure InsertItemToSalesLine()
+    var
+        IsOrder: Boolean;
     begin
         CurrPage.SETSELECTIONFILTER(recItemSubstitute);
         recSalesLine.RESET;
         recSalesLine.SETRANGE("Document Type", recSalesLine."Document Type"::Order);
         recSalesLine.SETRANGE("Document No.", GOrderNo);
-        IF recSalesLine.FINDLAST THEN BEGIN
+        IF recSalesLine.FINDLAST THEN begin
             LastLineNo := recSalesLine."Line No.";
-        END;
+            IsOrder := true;
+        end;
+
+        recSalesLine.reset;
+        recSalesLine.SETRANGE("Document Type", recSalesLine."Document Type"::Quote);
+        recSalesLine.SETRANGE("Document No.", GOrderNo);
+        IF recSalesLine.FINDLAST THEN begin
+            LastLineNo := recSalesLine."Line No.";
+            IsOrder := false;
+        end;
+
         IF recItemSubstitute.FINDFIRST THEN
             REPEAT
                 recSalesLine.INIT;
-                recSalesLine."Document Type" := recSalesLine."Document Type"::Order;
+                if IsOrder then
+                    recSalesLine."Document Type" := recSalesLine."Document Type"::Order
+                else
+                    recSalesLine."Document Type" := recSalesLine."Document Type"::Quote;
+
+
                 recSalesLine."Document No." := GOrderNo;
                 recSalesLine."Line No." := LastLineNo + 10000;
                 LastLineNo := LastLineNo + 10000;

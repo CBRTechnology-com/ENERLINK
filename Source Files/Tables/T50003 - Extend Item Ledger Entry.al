@@ -34,6 +34,8 @@ tableextension 50003 ExtendItemLedgerEntry extends "Item Ledger Entry"
         myInt: Integer;
         recVendor: Record Vendor;
         recCustomer: Record Customer;
+
+        recItem: Record Item;
         recSalesShipmentHeader: Record "Sales Shipment Header";
 
     procedure GetSourceName()
@@ -58,5 +60,13 @@ tableextension 50003 ExtendItemLedgerEntry extends "Item Ledger Entry"
                     "Sales Order No." := recSalesShipmentHeader."Order No.";
         end;
 
+    end;
+
+    procedure UpdateItemDescription()
+    begin
+        if (Description = '') then begin
+            if recItem.Get("Item No.") then
+                Description := recItem.Description;
+        end;
     end;
 }

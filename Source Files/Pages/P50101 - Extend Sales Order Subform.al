@@ -14,6 +14,29 @@ pageextension 50101 ExtendSalesOrderSubform extends "Sales Order Subform"
             }
 
         }
+        addafter("Unit Price")
+        {
+            field("Profit Margin"; "Profit Margin")
+            {
+                ApplicationArea = All;
+                Editable = false;
+
+            }
+        }
+        modify(Quantity)
+        {
+            trigger OnAfterValidate()
+            begin
+                ItemSubstitutePopup("No.");
+            end;
+        }
+        modify("Unit Price")
+        {
+            trigger OnAfterValidate()
+            begin
+                UpdateProfitMargin();
+            end;
+        }
 
     }
 
@@ -29,5 +52,6 @@ pageextension 50101 ExtendSalesOrderSubform extends "Sales Order Subform"
     trigger OnAfterGetRecord()
     begin
         GetItemDataFosSales("No.");
+        UpdateProfitMargin();
     end;
 }

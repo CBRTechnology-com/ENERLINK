@@ -13,6 +13,21 @@ pageextension 50102 ExtendSaleQuoteSubform extends "Sales Quote Subform"
                 ApplicationArea = All;
             }
         }
+        addafter("Unit Price")
+        {
+            field("Profit Margin"; "Profit Margin")
+            {
+                ApplicationArea = All;
+                Editable = false;
+            }
+        }
+        modify("Unit Price")
+        {
+            trigger OnAfterValidate()
+            begin
+                UpdateProfitMargin();
+            end;
+        }
 
     }
 
@@ -23,5 +38,6 @@ pageextension 50102 ExtendSaleQuoteSubform extends "Sales Quote Subform"
     trigger OnAfterGetRecord()
     begin
         GetItemDataFosSales("No.");
+        UpdateProfitMargin();
     end;
 }

@@ -29,7 +29,7 @@ pageextension 50110 ExtendItemLedgerEntries extends "Item Ledger Entries"
 
     actions
     {
-        // Add changes to page actions here
+
     }
 
     var
@@ -39,5 +39,6 @@ pageextension 50110 ExtendItemLedgerEntries extends "Item Ledger Entries"
     begin
         GetSourceName();
         GetSalesOrderNo();
+        UpdateItemDescription();
     end;
 }

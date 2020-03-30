@@ -1,5 +1,6 @@
 tableextension 50001 ExtendSalesLine extends "Sales Line"
 {
+
     fields
     {
         field(50000; "Quantity on Hand"; Decimal)
@@ -20,14 +21,25 @@ tableextension 50001 ExtendSalesLine extends "Sales Line"
             ObsoleteState = Removed;
 
         }
+        field(50003; "Profit Margin"; Decimal)
+        {
+            Caption = 'Profit Margin';
+            Editable = false;
+        }
         modify("No.")
         {
             trigger OnAfterValidate()
             begin
-
-                ItemSubstitutePopup("No.");
                 GetItemDataFosSales("No.");
+                UpdateProfitMargin;
+            end;
 
+        }
+        modify("Unit Price")
+        {
+            trigger OnAfterValidate()
+            begin
+                UpdateProfitMargin;
             end;
         }
         modify(Quantity)
@@ -36,6 +48,7 @@ tableextension 50001 ExtendSalesLine extends "Sales Line"
             var
                 AvlQtyAfterSales: Decimal;
             begin
+
                 AvlQtyAfterSales := 0;
                 GetItemDataFosSales("No.");
                 if ("Qty Available" > 0) and ("Qty Available" < quantity) THEN
@@ -45,9 +58,18 @@ tableextension 50001 ExtendSalesLine extends "Sales Line"
                     AvlQtyAfterSales := 0;
                     Validate("Qty. to Ship", AvlQtyAfterSales);
                 end;
+
             end;
         }
     }
+
+    trigger OnAfterInsert()
+    var
+        myInt: Integer;
+    begin
+        UpdateProfitMargin();
+
+    end;
 
     var
         myInt: Integer;
@@ -68,17 +90,24 @@ tableextension 50001 ExtendSalesLine extends "Sales Line"
     procedure ItemSubstitutePopup(recItemNo: Code[20])
     var
         recsalesLine: Record "Sales Line";
-        text001: Label 'A cross-selling item is available for the items you inserted. Would you like to see these items ?';
+        text001: Label 'Cross Selling items are configured for the item you selected. Please click on the SUBSITUTE link to see details.';
         ItemSubstitutePage: page "Item Substitution Entries";
         SalesOrderSubform: Page "Sales Order Subform";
     begin
         ItemSubstitution.Reset();
         ItemSubstitution.SetRange("No.", recItemNo);
         if ItemSubstitution.FindFirst() then
-            if Dialog.Confirm(text001, true) then begin
-                Message('Please open the item substitute in order to select the substitute item');
-            end;
+            Message(text001);
+    end;
 
+    procedure UpdateProfitMargin()
+    begin
+        If ("Unit Price" = 0) then
+            exit;
+        if ("Unit Price" > "Unit Cost (LCY)") then
+            "Profit Margin" := (("Unit Price" - "Unit Cost (LCY)") / "Unit Price") * 100
+        else
+            "Profit Margin" := 0;
     end;
 
 
