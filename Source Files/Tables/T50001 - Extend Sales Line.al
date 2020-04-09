@@ -90,7 +90,7 @@ tableextension 50001 ExtendSalesLine extends "Sales Line"
     procedure ItemSubstitutePopup(recItemNo: Code[20])
     var
         recsalesLine: Record "Sales Line";
-        text001: Label 'Cross Selling items are configured for the item you selected. Please click on the SUBSITUTE link to see details.';
+        text001: Label 'Cross Selling items are configured for the item you have selected. Please click on the Item Substitution link from Action: Line-> Related Information-> Select Item Substitution.';
         ItemSubstitutePage: page "Item Substitution Entries";
         SalesOrderSubform: Page "Sales Order Subform";
     begin

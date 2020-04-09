@@ -21,6 +21,13 @@ pageextension 50102 ExtendSaleQuoteSubform extends "Sales Quote Subform"
                 Editable = false;
             }
         }
+        modify(Quantity)
+        {
+            trigger OnAfterValidate()
+            begin
+                ItemSubstitutePopup("No.");
+            end;
+        }
         modify("Unit Price")
         {
             trigger OnAfterValidate()
@@ -28,6 +35,7 @@ pageextension 50102 ExtendSaleQuoteSubform extends "Sales Quote Subform"
                 UpdateProfitMargin();
             end;
         }
+
 
     }
 
