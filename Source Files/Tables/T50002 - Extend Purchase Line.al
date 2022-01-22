@@ -14,12 +14,36 @@ tableextension 50002 ExtendPurchaseLine extends "Purchase Line"
             Editable = false;
             DecimalPlaces = 0 : 5;
         }
+        field(50002; "Qty. on Purch. Order"; Decimal)
+        {
+            Caption = 'Qty. on Purch. Order';
+            Editable = false;
+            DecimalPlaces = 0 : 5;
+        }
+        field(50003; "Qty. on Sales Order"; Decimal)
+        {
+            Caption = 'Qty. on Sales Order';
+            DecimalPlaces = 0 : 5;
+            Editable = false;
+            FieldClass = FlowField;
+            AccessByPermission = TableData "Sales Shipment Header" = R;
+            CalcFormula = Sum("Sales Line"."Outstanding Qty. (Base)" WHERE("Document Type" = CONST(Order),
+                                                                            Type = CONST(Item),
+                                                                            "No." = FIELD("No."),
+                                                                            "Outstanding Qty. (Base)" = FILTER(> 0)));
+        }
+
         modify("No.")
         {
             trigger OnAfterValidate()
             begin
-                "Quantity on Hand" := 0;
-                "Qty Available" := 0;
+                GetItemDataForPurcahse("No.");
+            end;
+        }
+        modify(Quantity)
+        {
+            trigger OnAfterValidate()
+            begin
                 GetItemDataForPurcahse("No.");
             end;
         }
@@ -32,10 +56,10 @@ tableextension 50002 ExtendPurchaseLine extends "Purchase Line"
     procedure GetItemDataForPurcahse(ItemNo: Code[20])
     begin
         if recItem.Get(ItemNo) then begin
-            recItem.CalcFields(Inventory);
-            recItem.CalcFields("Qty. on Purch. Order");
+            recItem.CalcFields(Inventory, "Qty. on Sales Order", "Qty. on Purch. Order");
             "Quantity on Hand" := recItem.Inventory;
-            "Qty Available" := (recItem.Inventory - recItem."Qty. on Purch. Order");
+            "Qty. on Purch. Order" := recItem."Qty. on Purch. Order";
+            "Qty Available" := (recItem.Inventory - recItem."Qty. on Sales Order");
         end;
     end;
 }

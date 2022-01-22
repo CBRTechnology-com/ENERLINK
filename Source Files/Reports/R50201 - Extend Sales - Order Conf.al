@@ -451,6 +451,10 @@ report 50201 "Std Sales Order Conf CBR"
                 {
 
                 }
+                column(QtyBackOrdered; QtyBackOrdered)
+                {
+                    DecimalPlaces = 0 : 5;
+                }
                 column(Type_Line; Format(Type))
                 {
                 }
@@ -533,6 +537,17 @@ report 50201 "Std Sales Order Conf CBR"
 
                 trigger OnAfterGetRecord()
                 begin
+                    //CV_SV_081922>>
+                    QtyBackOrdered := 0;
+                    if Type = Type::Item then begin
+                        if (Quantity = "Quantity Shipped") then
+                            CurrReport.Skip();
+                    end;
+                    if Type = Type::" " then begin
+                        "Qty. to Ship" := 0;
+                        QtyBackOrdered := 0;
+                    end;
+                    //CV_SV_081922<<
                     if Type = Type::"G/L Account" then
                         "No." := '';
 
@@ -544,6 +559,7 @@ report 50201 "Std Sales Order Conf CBR"
                     if DisplayAssemblyInformation then
                         AsmInfoExistsForLine := AsmToOrderExists(AsmHeader);
 
+                    QtyBackOrdered := Quantity - "Qty. to Ship" - "Quantity Shipped";
                     TransHeaderAmount += PrevLineAmount;
                     PrevLineAmount := "Line Amount";
                     TotalSubTotal += "Line Amount";
@@ -942,6 +958,7 @@ report 50201 "Std Sales Order Conf CBR"
                 TotalAmountVAT := 0;
                 TotalAmountInclVAT := 0;
                 TotalPaymentDiscOnVAT := 0;
+
             end;
         }
     }
@@ -1125,6 +1142,7 @@ report 50201 "Std Sales Order Conf CBR"
         TotalSubTotal: Decimal;
         TotalAmount: Decimal;
         TotalAmountInclVAT: Decimal;
+        QtyBackOrdered: Decimal;
         TotalAmountVAT: Decimal;
         TotalInvDiscAmount: Decimal;
         TotalPaymentDiscOnVAT: Decimal;

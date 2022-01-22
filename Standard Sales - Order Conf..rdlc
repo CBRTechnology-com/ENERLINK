@@ -493,6 +493,12 @@ End Function
         <Field Name="Qty_ShippedFormat">
           <DataField>Qty_ShippedFormat</DataField>
         </Field>
+        <Field Name="QtyBackOrdered">
+          <DataField>QtyBackOrdered</DataField>
+        </Field>
+        <Field Name="QtyBackOrderedFormat">
+          <DataField>QtyBackOrderedFormat</DataField>
+        </Field>
         <Field Name="Type_Line">
           <DataField>Type_Line</DataField>
         </Field>

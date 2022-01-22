@@ -4,11 +4,11 @@ tableextension 50006 ExtendTrackingSpecification extends "Tracking Specification
     {
         field(50000; "Purity(%)"; Decimal)
         {
-
+            DataClassification = CustomerContent;
         }
         field(50001; QC; Boolean)
         {
-
+            DataClassification = CustomerContent;
         }
     }
 

@@ -32,4 +32,6 @@ pageextension 50107 ExtendSalesOrders extends "Sales Order List"
         myInt: Integer;
         DocPrint: Codeunit "Document-Print";
         Usage: Option "Order Confirmation","Work Order","Pick Instruction";
+
+
 }

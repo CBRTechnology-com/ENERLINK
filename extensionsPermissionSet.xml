@@ -2,8 +2,8 @@
 <PermissionSets>
   <PermissionSet RoleID="ENERLINK_BC15" RoleName="EnerLink_BC15">
     <Permission>
-      <ObjectType>5</ObjectType>
       <ObjectID>50301</ObjectID>
+      <ObjectType>5</ObjectType>
       <ReadPermission>0</ReadPermission>
       <InsertPermission>0</InsertPermission>
       <ModifyPermission>0</ModifyPermission>
@@ -12,8 +12,28 @@
       <SecurityFilter />
     </Permission>
     <Permission>
-      <ObjectType>3</ObjectType>
+      <ObjectID>50112</ObjectID>
+      <ObjectType>8</ObjectType>
+      <ReadPermission>0</ReadPermission>
+      <InsertPermission>0</InsertPermission>
+      <ModifyPermission>0</ModifyPermission>
+      <DeletePermission>0</DeletePermission>
+      <ExecutePermission>1</ExecutePermission>
+      <SecurityFilter />
+    </Permission>
+    <Permission>
+      <ObjectID>50113</ObjectID>
+      <ObjectType>8</ObjectType>
+      <ReadPermission>0</ReadPermission>
+      <InsertPermission>0</InsertPermission>
+      <ModifyPermission>0</ModifyPermission>
+      <DeletePermission>0</DeletePermission>
+      <ExecutePermission>1</ExecutePermission>
+      <SecurityFilter />
+    </Permission>
+    <Permission>
       <ObjectID>50201</ObjectID>
+      <ObjectType>3</ObjectType>
       <ReadPermission>0</ReadPermission>
       <InsertPermission>0</InsertPermission>
       <ModifyPermission>0</ModifyPermission>
@@ -22,8 +42,8 @@
       <SecurityFilter />
     </Permission>
     <Permission>
-      <ObjectType>3</ObjectType>
       <ObjectID>50202</ObjectID>
+      <ObjectType>3</ObjectType>
       <ReadPermission>0</ReadPermission>
       <InsertPermission>0</InsertPermission>
       <ModifyPermission>0</ModifyPermission>
@@ -32,8 +52,8 @@
       <SecurityFilter />
     </Permission>
     <Permission>
-      <ObjectType>3</ObjectType>
       <ObjectID>50203</ObjectID>
+      <ObjectType>3</ObjectType>
       <ReadPermission>0</ReadPermission>
       <InsertPermission>0</InsertPermission>
       <ModifyPermission>0</ModifyPermission>
@@ -42,8 +62,8 @@
       <SecurityFilter />
     </Permission>
     <Permission>
-      <ObjectType>3</ObjectType>
       <ObjectID>50204</ObjectID>
+      <ObjectType>3</ObjectType>
       <ReadPermission>0</ReadPermission>
       <InsertPermission>0</InsertPermission>
       <ModifyPermission>0</ModifyPermission>
@@ -52,8 +72,8 @@
       <SecurityFilter />
     </Permission>
     <Permission>
-      <ObjectType>3</ObjectType>
       <ObjectID>50212</ObjectID>
+      <ObjectType>3</ObjectType>
       <ReadPermission>0</ReadPermission>
       <InsertPermission>0</InsertPermission>
       <ModifyPermission>0</ModifyPermission>
@@ -62,8 +82,8 @@
       <SecurityFilter />
     </Permission>
     <Permission>
-      <ObjectType>3</ObjectType>
       <ObjectID>50213</ObjectID>
+      <ObjectType>3</ObjectType>
       <ReadPermission>0</ReadPermission>
       <InsertPermission>0</InsertPermission>
       <ModifyPermission>0</ModifyPermission>
@@ -72,8 +92,8 @@
       <SecurityFilter />
     </Permission>
     <Permission>
-      <ObjectType>3</ObjectType>
       <ObjectID>50214</ObjectID>
+      <ObjectType>3</ObjectType>
       <ReadPermission>0</ReadPermission>
       <InsertPermission>0</InsertPermission>
       <ModifyPermission>0</ModifyPermission>
@@ -82,8 +102,8 @@
       <SecurityFilter />
     </Permission>
     <Permission>
-      <ObjectType>3</ObjectType>
       <ObjectID>50215</ObjectID>
+      <ObjectType>3</ObjectType>
       <ReadPermission>0</ReadPermission>
       <InsertPermission>0</InsertPermission>
       <ModifyPermission>0</ModifyPermission>

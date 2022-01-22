@@ -2,7 +2,7 @@ pageextension 50106 ExtendSalesOrder extends "Sales Order"
 {
     layout
     {
-        // Add changes to page layout here
+
     }
 
     actions

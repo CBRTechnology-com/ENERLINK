@@ -12,6 +12,10 @@ pageextension 50104 ExtendSalesReturnOrderSubform extends "Sales Return Order Su
             {
                 ApplicationArea = All;
             }
+            field("Qty. on Purch. Order"; "Qty. on Purch. Order")
+            {
+                ApplicationArea = All;
+            }
         }
     }
 

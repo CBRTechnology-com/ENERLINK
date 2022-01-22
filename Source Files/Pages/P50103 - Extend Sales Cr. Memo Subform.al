@@ -12,6 +12,10 @@ pageextension 50103 ExtendSalesCrMemoSubform extends "Sales Cr. Memo Subform"
             {
                 ApplicationArea = All;
             }
+            field("Qty. on Purch. Order"; "Qty. on Purch. Order")
+            {
+                ApplicationArea = All;
+            }
         }
     }
 

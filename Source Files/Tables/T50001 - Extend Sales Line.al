@@ -26,6 +26,36 @@ tableextension 50001 ExtendSalesLine extends "Sales Line"
             Caption = 'Profit Margin';
             Editable = false;
         }
+        field(50004; "Assmebly BOM"; Boolean)
+        {
+            CalcFormula = Exist("BOM Component" WHERE("Parent Item No." = FIELD("No.")));
+            Caption = 'Assembly BOM';
+            Editable = false;
+            FieldClass = FlowField;
+        }
+        field(50005; "Expected Arrival Date"; Date)
+        {
+            Caption = 'Expected Arrival Date';
+
+        }
+        field(50006; "Qty. on Purch. Order"; Decimal)
+        {
+            Caption = 'Qty. on Purch. Order';
+            Editable = false;
+            DecimalPlaces = 0 : 5;
+        }
+        field(50007; "Qty. on Sales Order"; Decimal)
+        {
+            Caption = 'Qty. on Sales Order';
+            DecimalPlaces = 0 : 5;
+            Editable = false;
+            FieldClass = FlowField;
+            AccessByPermission = TableData "Sales Shipment Header" = R;
+            CalcFormula = Sum("Sales Line"."Outstanding Qty. (Base)" WHERE("Document Type" = CONST(Order),
+                                                                            Type = CONST(Item),
+                                                                            "No." = FIELD("No."),
+                                                                            "Outstanding Qty. (Base)" = FILTER(> 0)));
+        }
         modify("No.")
         {
             trigger OnAfterValidate()
@@ -51,7 +81,7 @@ tableextension 50001 ExtendSalesLine extends "Sales Line"
 
                 AvlQtyAfterSales := 0;
                 GetItemDataFosSales("No.");
-                if ("Qty Available" > 0) and ("Qty Available" < quantity) THEN
+                if ("Qty Available" > 0) and ("Qty Available" < Quantity) THEN
                     Validate("Qty. to Ship", "Qty Available");
 
                 if "Qty Available" <= 0 then begin
@@ -68,7 +98,6 @@ tableextension 50001 ExtendSalesLine extends "Sales Line"
         myInt: Integer;
     begin
         UpdateProfitMargin();
-
     end;
 
     var
@@ -80,9 +109,9 @@ tableextension 50001 ExtendSalesLine extends "Sales Line"
     procedure GetItemDataFosSales(ItemNo: Code[20])
     begin
         if recItem.Get(ItemNo) then begin
-            recItem.CalcFields(Inventory);
-            recItem.CalcFields("Qty. on Sales Order");
+            recItem.CalcFields(Inventory, "Qty. on Sales Order", "Qty. on Purch. Order");
             "Quantity on Hand" := recItem.Inventory;
+            "Qty. on Purch. Order" := recItem."Qty. on Purch. Order";
             "Qty Available" := (recItem.Inventory - recItem."Qty. on Sales Order");
         end;
     end;

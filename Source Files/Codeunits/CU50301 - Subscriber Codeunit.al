@@ -20,9 +20,24 @@ codeunit 50301 MyEventSubscriberCodeunit
             SalesHeader.Validate("Posting Date", Today);
             SalesHeader.Validate("Document Date", Today);
             SalesHeader.MODIFY;
+            DIALOG.MESSAGE(Text001);
         END;
-        DIALOG.MESSAGE(Text001);
+
     END;
+
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Purch.-Post (Yes/No)", 'OnBeforeConfirmPost', '', true, true)]
+    local procedure UpdatePostingDate(VAR PurchaseHeader: Record "Purchase Header"; VAR HideDialog: Boolean; VAR IsHandled: Boolean; VAR DefaultOption: Integer)
+    begin
+        if ((PurchaseHeader."Posting Date" = Today) OR (PurchaseHeader."Document Date" = Today)) then
+            exit;
+        if Dialog.Confirm(Confirmation, true) then begin
+            PurchaseHeader.Validate("Posting Date", today);
+            PurchaseHeader.Validate("Document Date", Today);
+            PurchaseHeader.Modify();
+            Dialog.Message(Text001);
+        end;
+
+    end;
 
 
 
